@@ -16,7 +16,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         to: process.env["SendGridReceiver"],
         from: process.env["SendGridSender"],
         subject: "Plattformradar: Neuer Kontakt",
-        html: `<div>Name: ${body.emailMessage}</div>`,
+        html: `<div>${body.emailMessage}</div>`,
       };
   
       try {
