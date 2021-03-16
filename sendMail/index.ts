@@ -24,7 +24,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   
         context.res.status = 200;
         context.res.body = {
-          message: "Email successful! Check email for the message.",
+          message: "Success!",
         };
       } catch (error) {
         context.res.status = 400;
