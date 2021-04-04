@@ -9,6 +9,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     // form data submitted as query string in request body
     const body = querystring.parse(req.body);
 
+    //only allow whitelisted html tags in message to prevent html injections
+    const strippedHtmlMessage = body.emailMessage.toString().replace(/<(?!((?:\/\s*)?(?:br|p|b|u|[o|i]l|li|hr)))([^>])+>/gm,'(removed html tag)')
+
     // check to make sure form was submitted with field data entered
     if (body && body.emailMessage) {
       // create an email options object
@@ -16,7 +19,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         to: process.env["SendGridReceiver"],
         from: process.env["SendGridSender"],
         subject: "Plattformradar: Neuer Kontakt",
-        html: `<div>${body.emailMessage}</div>`,
+        html: `<div>${strippedHtmlMessage}</div>`,
       };
   
       try {
